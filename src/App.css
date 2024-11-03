@@ -1,5 +1,12 @@
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f2f5fa;
+  margin: 0;
+  padding: 0;
 }
 
 .App-logo {
@@ -34,5 +41,19 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.5rem;
   }
 }

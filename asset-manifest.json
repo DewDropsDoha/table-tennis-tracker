@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/table-tennis-tracker/static/css/main.c42ddbea.css",
-    "main.js": "/table-tennis-tracker/static/js/main.b52f21ba.js",
-    "static/js/453.7948cd69.chunk.js": "/table-tennis-tracker/static/js/453.7948cd69.chunk.js",
-    "index.html": "/table-tennis-tracker/index.html",
-    "main.c42ddbea.css.map": "/table-tennis-tracker/static/css/main.c42ddbea.css.map",
-    "main.b52f21ba.js.map": "/table-tennis-tracker/static/js/main.b52f21ba.js.map",
-    "453.7948cd69.chunk.js.map": "/table-tennis-tracker/static/js/453.7948cd69.chunk.js.map"
+    "main.css": "/static/css/main.c42ddbea.css",
+    "main.js": "/static/js/main.ea949b9f.js",
+    "static/js/453.7948cd69.chunk.js": "/static/js/453.7948cd69.chunk.js",
+    "index.html": "/index.html",
+    "main.c42ddbea.css.map": "/static/css/main.c42ddbea.css.map",
+    "main.ea949b9f.js.map": "/static/js/main.ea949b9f.js.map",
+    "453.7948cd69.chunk.js.map": "/static/js/453.7948cd69.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c42ddbea.css",
-    "static/js/main.b52f21ba.js"
+    "static/js/main.ea949b9f.js"
   ]
 }

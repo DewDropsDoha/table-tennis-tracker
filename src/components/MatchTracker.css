@@ -19,6 +19,29 @@
   overflow: hidden;
 }
 
+.player-selection {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+  gap: 10px;
+  color: black;
+}
+
+.player-selection select {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 45%;
+}
+
+.player-selection select:focus {
+  outline: none;
+  border-color: #3B82F6;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+}
+
+
 .player-inputs {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

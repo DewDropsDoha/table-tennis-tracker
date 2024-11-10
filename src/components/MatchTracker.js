@@ -5,6 +5,7 @@ import {
   faMinusSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import './MatchTracker.css';
+import axios from 'axios';
 
 const MatchTracker = () => {
   const [player1, setPlayer1] = useState('');
@@ -16,6 +17,17 @@ const MatchTracker = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [clickCount, setClickCount] = useState(0);
   const [stats, setStats] = useState([]);
+  const [players, setPlayers] = useState([]);
+
+  useEffect(() => {
+    const getPlayers = async () => {
+      const resp = await axios.get(
+        'https://fnaauecyoji2erada62q6fwqvi0tbqat.lambda-url.ap-southeast-1.on.aws/player'
+      );
+      setPlayers(resp.data.data);
+    };
+    getPlayers();
+  }, []);
 
   const playerColors = {
     player1: '#3B82F6',
@@ -28,11 +40,13 @@ const MatchTracker = () => {
       return;
     }
 
-    setErrorMessage('');
     setScore1(0);
     setScore2(0);
+    setStats(() => [[player1, player2]]);
     setIsMatchActive(true);
     setWinnerMessage('');
+    setErrorMessage('');
+    setClickCount(0);
   };
 
   const resetMatch = () => {
@@ -42,20 +56,18 @@ const MatchTracker = () => {
     setScore2(0);
     setIsMatchActive(false);
     setWinnerMessage('');
-  };
-
-  const endMatch = async () => {
-    console.log('End Match');
-    resetMatch();
+    setErrorMessage('');
+    setClickCount(0);
+    setStats([]);
   };
 
   useEffect(() => {
     const checkForWinner = () => {
       if (score1 > 10 && score1 - score2 > 1) {
-        setWinnerMessage(`${player1} wins!`);
+        setWinnerMessage(`${player1} won!`);
         setIsMatchActive(false);
       } else if (score2 > 10 && score2 - score1 > 1) {
-        setWinnerMessage(`${player2} wins!`);
+        setWinnerMessage(`${player2} won!`);
         setIsMatchActive(false);
       }
     };
@@ -65,13 +77,13 @@ const MatchTracker = () => {
 
   const handleScore1 = () => {
     setScore1(score1 + 1);
-    setStats((prev) => [...prev, [score1 + 1, 0]]);
+    setStats((prev) => [...prev, [1, 0]]);
     setClickCount(clickCount + 1);
   };
 
   const handleScore2 = () => {
     setScore2(score2 + 1);
-    setStats((prev) => [...prev, [0, score2 + 1]]);
+    setStats((prev) => [...prev, [0, 1]]);
     setClickCount(clickCount + 1);
   };
 
@@ -85,6 +97,20 @@ const MatchTracker = () => {
     setStats((prev) => prev.slice(0, -1));
   };
 
+  const uploadScore = () => {
+    const data = JSON.parse(JSON.stringify(stats));
+    let sum1 = 0;
+    let sum2 = 0;
+
+    for (let i = 1; i < data.length; i++) {
+      sum1 += data[i][0];
+      sum2 += data[i][1];
+    }
+
+    data.splice(1, 0, [sum1, sum2]);
+    console.log('Upload', data);
+  };
+
   const showIconForPlayer1 =
     clickCount < 21 ? clickCount % 4 < 2 : clickCount % 2 === 0;
 
@@ -92,26 +118,46 @@ const MatchTracker = () => {
     <div className="match-tracker-container">
       <div className="match-tracker">
         <h1>Table Tennis Match Tracker</h1>
-        <div className="player-inputs">
-          <input
-            type="text"
-            placeholder="Player 1 Name"
-            value={player1}
-            onChange={(e) => setPlayer1(e.target.value)}
-            disabled={isMatchActive}
-            className="player-input"
-            style={{ borderColor: playerColors.player1 }}
-          />
-          <input
-            type="text"
-            placeholder="Player 2 Name"
-            value={player2}
-            onChange={(e) => setPlayer2(e.target.value)}
-            disabled={isMatchActive}
-            className="player-input"
-            style={{ borderColor: playerColors.player2 }}
-          />
-        </div>
+
+        {!isMatchActive && !winnerMessage && (
+          <div className="player-selection">
+            <select
+              onChange={(e) => setPlayer1(e.target.value)}
+              value={player1}
+            >
+              <option key="player1-dropdown" value="">
+                Select Player 1
+              </option>
+              {players.map((name, index) => (
+                <option
+                  key={`player1-${index}`}
+                  value={name}
+                  disabled={name == player2}
+                >
+                  {name}
+                </option>
+              ))}
+            </select>
+
+            <select
+              onChange={(e) => setPlayer2(e.target.value)}
+              value={player2}
+            >
+              <option key="player2-dropdown" value="">
+                Select Player 2
+              </option>
+              {players.map((name, index) => (
+                <option
+                  key={`player1-${index}`}
+                  value={name}
+                  disabled={name == player1}
+                >
+                  {name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
 
         <div className="score-board">
           <h2>Score</h2>
@@ -122,7 +168,6 @@ const MatchTracker = () => {
               <table style={{ width: '100%', paddingBottom: '8px' }}>
                 <thead>
                   <tr style={{ color: playerColors.player1 }}>
-                    <td>{player1}</td>
                     {stats.map((item, index) => (
                       <td key={`${index}-${item[0]}`}>{item[0]}</td>
                     ))}
@@ -130,13 +175,22 @@ const MatchTracker = () => {
                 </thead>
                 <tbody>
                   <tr style={{ color: playerColors.player2 }}>
-                    <td>{player2}</td>
                     {stats.map((item, index) => (
                       <td key={`${index}-${item[0]}`}>{item[1]}</td>
                     ))}
                   </tr>
                 </tbody>
               </table>
+              {winnerMessage && (
+                <div className="controls">
+                  <button
+                    onClick={uploadScore}
+                    className="control-button start"
+                  >
+                    Upload Score
+                  </button>
+                </div>
+              )}
             </>
           )}
 
@@ -179,7 +233,7 @@ const MatchTracker = () => {
             </div>
           </div>
 
-          <div hidden={winnerMessage || clickCount === 0 ? true : false}>
+          <div hidden={!isMatchActive}>
             <div className="icon-container">
               <FontAwesomeIcon
                 icon={faMinusSquare}
@@ -200,19 +254,16 @@ const MatchTracker = () => {
         <div className="controls">
           <button
             onClick={startMatch}
-            disabled={isMatchActive}
+            disabled={isMatchActive || winnerMessage}
             className="control-button start"
           >
             Start Match
           </button>
           <button
-            onClick={endMatch}
-            disabled={!isMatchActive}
+            onClick={resetMatch}
+            disabled={!isMatchActive && !winnerMessage}
             className="control-button end"
           >
-            End Match
-          </button>
-          <button onClick={resetMatch} className="control-button reset">
             Reset Match
           </button>
         </div>

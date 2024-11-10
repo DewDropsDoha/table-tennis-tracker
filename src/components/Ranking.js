@@ -1,17 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ScoreChart from './ScoreChart';
 
 const Ranking = () => {
+  const score = {
+    Mumin: [1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1],
+    Fayaz: [0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0],
+  };
+
   return (
     <div>
-      <h1>Table Tennis Rankings</h1>
-      <p>Here are the current rankings...</p>
-      <ul>
-        <li>Player 1 - 1st</li>
-        <li>Player 2 - 2nd</li>
-        <li>Player 3 - 3rd</li>
-      </ul>
       <Link to="/table-tennis-tracker/match">Start Match</Link>
+      <ScoreChart score={score} />
     </div>
   );
 };

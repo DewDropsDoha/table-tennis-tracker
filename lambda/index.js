@@ -1,7 +1,10 @@
-import cors from 'cors';
 import express from 'express';
+import cors from 'cors';
+import axios from 'axios';
 import { GoogleAuth } from 'google-auth-library';
 import { google } from 'googleapis';
+import serverless from 'serverless-http';
+import { auth } from 'express-oauth2-jwt-bearer';
 
 const app = express();
 app.use(express.json());
@@ -158,7 +161,7 @@ const sortRankingV2 = (rank) =>{
     players.forEach((player, index) => {
       player.rank = index + 1;
       player.totalPlayed = player.win + player.lose;
-      player.matchLeft = noOfPlayers - player.totalPlayed
+      player.matchLeft = noOfPlayers - player.totalPlayed - 1;
     });
 
     return players;
@@ -173,14 +176,10 @@ app.get('/rank',  async (req, res) => {
     for (let i = 1; i <= currentScores.length-2; i=i+3){
       if (!currentScores[i].length) continue;
       const index1 = currentScores[i][0];
-      console.log('index1 : ', index1);
       const index2 = currentScores[i + 1][0];
-      console.log('index2 : ', index2);
 
       const sc1 = currentScores[i][1];
-      console.log('sc1 : ', sc1);
       const sc2 = currentScores[i + 1][1];
-      console.log('sc2 : ', sc2);
 
       
       rank[index1] = {
@@ -313,4 +312,4 @@ function addEmptyRows(data) {
 }
 
 export const handler = serverless(app);
-// app.listen(3000, () => console.log("Server running on http://localhost:3000"));
+// app.listen(8080, () => console.log("Server running on http://localhost:8080"));

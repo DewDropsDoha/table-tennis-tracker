@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/table-tennis-tracker/static/css/main.03b4bbd7.css",
-    "main.js": "/table-tennis-tracker/static/js/main.0cb73968.js",
+    "main.js": "/table-tennis-tracker/static/js/main.f2ef2ec7.js",
     "static/js/453.7948cd69.chunk.js": "/table-tennis-tracker/static/js/453.7948cd69.chunk.js",
     "index.html": "/table-tennis-tracker/index.html",
     "main.03b4bbd7.css.map": "/table-tennis-tracker/static/css/main.03b4bbd7.css.map",
-    "main.0cb73968.js.map": "/table-tennis-tracker/static/js/main.0cb73968.js.map",
+    "main.f2ef2ec7.js.map": "/table-tennis-tracker/static/js/main.f2ef2ec7.js.map",
     "453.7948cd69.chunk.js.map": "/table-tennis-tracker/static/js/453.7948cd69.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.03b4bbd7.css",
-    "static/js/main.0cb73968.js"
+    "static/js/main.f2ef2ec7.js"
   ]
 }

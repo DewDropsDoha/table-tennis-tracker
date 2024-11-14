@@ -26,6 +26,7 @@ const MatchTracker = () => {
   const [matches, setMatches] = useState([]);
   const [selectedMatch, setSelectedMatch] = useState('');
   const [resetCountdown, setResetCountdown] = useState(0);
+  const [serve, setServe] = useState([1]);
 
   const playerColors = {
     player1: '#3B82F6',
@@ -111,7 +112,7 @@ const MatchTracker = () => {
 
   const handleScore1 = () => {
     if (!isMatchActive && !winnerMessage) {
-      setShowServeIconForPlayer1(true);
+      setServe([1]);
       return;
     } else if (winnerMessage) return;
 
@@ -119,11 +120,21 @@ const MatchTracker = () => {
     setPlayer1Stats((prev) => [...prev, 1]);
     setPlayer2Stats((prev) => [...prev, 0]);
     setClickCount(clickCount + 1);
+    setServe((prev) => {
+      if (prev.length < 21) {
+        if (prev.length % 2 === 0) {
+          return [...prev, prev[prev.length - 1] === 1 ? 2 : 1];
+        }
+        return [...prev, prev[prev.length - 1]];
+      } else {
+        return [...prev, prev[prev.length - 1] === 1 ? 2 : 1];
+      }
+    });
   };
 
   const handleScore2 = () => {
     if (!isMatchActive && !winnerMessage) {
-      setShowServeIconForPlayer1(false);
+      setServe([2]);
       return;
     } else if (winnerMessage) return;
 
@@ -131,6 +142,16 @@ const MatchTracker = () => {
     setPlayer1Stats((prev) => [...prev, 0]);
     setPlayer2Stats((prev) => [...prev, 1]);
     setClickCount(clickCount + 1);
+    setServe((prev) => {
+      if (prev.length < 21) {
+        if (prev.length % 2 === 0) {
+          return [...prev, prev[prev.length - 1] === 1 ? 2 : 1];
+        }
+        return [...prev, prev[prev.length - 1]];
+      } else {
+        return [...prev, prev[prev.length - 1] === 1 ? 2 : 1];
+      }
+    });
   };
 
   const handleDecreaseScore1 = () => {
@@ -139,6 +160,8 @@ const MatchTracker = () => {
     setScore1(score);
     setPlayer1Stats((prev) => prev.slice(0, -1));
     setPlayer2Stats((prev) => prev.slice(0, -1));
+    setClickCount(clickCount - 1);
+    setServe((prev) => prev.slice(0, -1));
   };
 
   const handleDecreaseScore2 = () => {
@@ -147,6 +170,8 @@ const MatchTracker = () => {
     setScore2(score);
     setPlayer1Stats((prev) => prev.slice(0, -1));
     setPlayer2Stats((prev) => prev.slice(0, -1));
+    setClickCount(clickCount - 1);
+    setServe((prev) => prev.slice(0, -1));
   };
 
   const formatScore = () => {
@@ -278,7 +303,7 @@ const MatchTracker = () => {
               style={{ backgroundColor: playerColors.player1 }}
               onClick={handleScore1}
             >
-              {showServeIconForPlayer1 && (
+              {serve[serve.length - 1] === 1 && (
                 <FontAwesomeIcon
                   icon={faTableTennis}
                   size="xl"
@@ -297,7 +322,7 @@ const MatchTracker = () => {
               style={{ backgroundColor: playerColors.player2 }}
               onClick={handleScore2}
             >
-              {!showServeIconForPlayer1 && (
+              {serve[serve.length - 1] === 2 && (
                 <FontAwesomeIcon
                   icon={faTableTennis}
                   size="xl"

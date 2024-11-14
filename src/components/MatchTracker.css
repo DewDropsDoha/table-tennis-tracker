@@ -1,5 +1,5 @@
 .match-tracker-container {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f2f5fa;
   color: #333;
   display: flex;
@@ -33,10 +33,9 @@
 
 .match-selection select:focus {
   outline: none;
-  border-color: #3B82F6;
+  border-color: #3b82f6;
   box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
 }
-
 
 .player-inputs {
   display: grid;
@@ -102,7 +101,8 @@
   padding: 10px;
 }
 
-.buttons, .controls {
+.buttons,
+.controls {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -110,7 +110,8 @@
   margin: 1rem 0;
 }
 
-.score-button, .control-button {
+.score-button,
+.control-button {
   padding: 0.8rem 1rem;
   font-size: 0.9rem;
   font-weight: bold;
@@ -146,7 +147,8 @@
   filter: brightness(0.9);
 }
 
-.control-button:disabled, .score-button:disabled {
+.control-button:disabled,
+.score-button:disabled {
   background-color: #ddd;
   cursor: not-allowed;
 }

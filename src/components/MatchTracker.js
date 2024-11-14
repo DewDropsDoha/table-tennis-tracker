@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faTableTennis,
   faMinusSquare,
+  faTableTennis,
 } from '@fortawesome/free-solid-svg-icons';
-import './MatchTracker.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-import Loading from './Loading';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CountdownTimer from './CountdownTimer';
+import Loading from './Loading';
+import './MatchTracker.css';
 
 const MatchTracker = () => {
   const [player1, setPlayer1] = useState('');
@@ -28,6 +29,8 @@ const MatchTracker = () => {
   const [resetCountdown, setResetCountdown] = useState(0);
   const [serve, setServe] = useState([1]);
 
+  const navigate = useNavigate();
+  
   const playerColors = {
     player1: '#3B82F6',
     player2: '#7AB2D3',
@@ -45,6 +48,7 @@ const MatchTracker = () => {
       try {
         const resp = await axios.get(
           'https://fnaauecyoji2erada62q6fwqvi0tbqat.lambda-url.ap-southeast-1.on.aws/match'
+          // 'http://localhost:8080/match'
         );
         setMatches(resp.data.data);
         setIsLoading(false);
@@ -207,9 +211,13 @@ const MatchTracker = () => {
 
   if (isLoading) return <Loading />;
 
+  const goToRanking = () => {
+    navigate('/table-tennis-tracker/rank');
+  };
   return (
     <div className="match-tracker-container">
       <div className="match-tracker">
+        <div ><button onClick={goToRanking}>Go to Rankings</button></div>
         <h1>Table Tennis Match Tracker</h1>
 
         {!isMatchActive && !winnerMessage && (

@@ -1,83 +1,156 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-  }
-  
-  .match-tracker {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  h1 {
-    text-align: center;
-    color: #333;
-  }
-  
-  .player-inputs {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .player-input {
-    flex: 1;
-    margin-right: 10px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  .player-input:last-child {
-    margin-right: 0;
-  }
-  
-  .score-board {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .score {
-    font-weight: bold;
-    font-size: 24px;
-    color: #007BFF;
-  }
-  
-  .buttons,
-  .controls {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  button {
-    padding: 10px 15px;
-    background: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  button:disabled {
-    background: #ddd;
-    cursor: not-allowed;
-  }
-  
-  button:hover:not(:disabled) {
-    background: #0056b3;
-  }
-  
-  .winner-message {
-    text-align: center;
-    color: #28a745;
-    font-size: 24px;
-  }
-  
+.match-tracker-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f2f5fa;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.match-tracker {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  max-width: 500px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.match-selection {
+  color: black;
+}
+
+.match-selection select {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.match-selection select:focus {
+  outline: none;
+  border-color: #3B82F6;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+}
+
+
+.player-inputs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.player-input {
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #d1d1d1;
+  border-radius: 8px;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.player-input:focus {
+  border-color: #4a90e2;
+}
+
+.score-board {
+  margin-bottom: 1.5rem;
+}
+
+.score-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.score-box {
+  flex: 1;
+  text-align: center;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 144px;
+  min-width: 120px;
+}
+
+.player-name {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: white;
+  padding-top: 44px;
+  min-height: 32px;
+  min-width: 32px;
+}
+
+.score {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  /* min-height: 24px;
+  min-width: 24px; */
+}
+
+.icon-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.buttons, .controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.score-button, .control-button {
+  padding: 0.8rem 1rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  flex: 1 1 45%;
+}
+
+.score-button {
+  background-color: #6c63ff;
+}
+
+.score-button:hover {
+  background-color: #554fcc;
+}
+
+.control-button.start {
+  background-color: #28a745;
+}
+
+.control-button.end {
+  background-color: #dc3545;
+}
+
+.control-button.reset {
+  background-color: #ffc107;
+}
+
+.control-button:hover {
+  filter: brightness(0.9);
+}
+
+.control-button:disabled, .score-button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.winner-message {
+  color: #28a745;
+}
